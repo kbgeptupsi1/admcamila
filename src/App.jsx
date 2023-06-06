@@ -14,11 +14,7 @@ import EditarPerfil from './paginas/EditaPerfil'
 import CambiarPassword from './paginas/CambiarPassword'
 import ListadoPacientes from './components/ListadoPacientes'
 
-
-
-
-function App() {
-
+function App () {
   return (
     <BrowserRouter>
       <AuthProvider>
