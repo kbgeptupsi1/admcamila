@@ -1,31 +1,31 @@
-import jwt from "jsonwebtoken";
-import Veterinario from "../models/Veterinario.js";
+import jwt from 'jsonwebtoken'
+import Veterinario from '../models/Veterinario.js'
 
 const checkAuth = async (req, res, next) => {
-  let token;
+  let token
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.authorization.startsWith('Bearer')
   ) {
     try {
-      token = req.headers.authorization.split(" ")[1];
-      const decored = jwt.verify(token, process.env.JWT_SECRET);
+      token = req.headers.authorization.split(' ')[1]
+      const decored = jwt.verify(token, process.env.JWT_SECRET)
       req.veterinario = await Veterinario.findById(decored.id).select(
-        "-password -token -confimado"
-      );
-      return next();
+        '-password -token -confimado'
+      )
+      return next()
     } catch (error) {
-      const e = new Error("Token no valido");
-      return res.status(403).json({ msg: e.message });
+      const e = new Error('Token no valido')
+      return res.status(403).json({ msg: e.message })
     }
   }
 
   if (!token) {
-    const error = new Error("Token no valido o inexistente");
-    res.status(403).json({ msg: error.message });
+    const error = new Error('Token no valido o inexistente')
+    res.status(403).json({ msg: error.message })
   }
 
-  next();
-};
+  next()
+}
 
-export default checkAuth;
+export default checkAuth
